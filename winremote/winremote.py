@@ -58,15 +58,13 @@ class Windows(object):
             return not self._session.run_cmd('echo').status_code
         except (
             winrm.exceptions.WinRMTransportError,
-            winrm.exceptions.TimeoutError
+            winrm.exceptions.WinRMOperationTimeoutError
         ) as e:
             self.logger.warn("WinRM is not connective: %s", e)
             return False
         except (
-            winrm.exceptions.WinRMWebServiceError,
-            winrm.exceptions.WinRMAuthorizationError,
-            winrm.exceptions.WinRMWSManFault,
-            winrm.exceptions.UnauthorizedError
+            winrm.exceptions.WinRMError,
+            winrm.exceptions.AuthenticationError
         ) as e:
             raise WinRMException(e)
 
